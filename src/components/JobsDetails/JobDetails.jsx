@@ -4,6 +4,10 @@ import { FaPhone } from "react-icons/fa6";
 import { MdOutlineEmail, MdOutlineLocationOn } from "react-icons/md";
 import { useLoaderData, useParams } from "react-router-dom";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { saveJobApplications } from "../../utility/localStorage";
+
 
 const JobDetails = () => {
     const jobs = useLoaderData();
@@ -12,7 +16,14 @@ const JobDetails = () => {
     const { job_description, job_responsibility, educational_requirements, experiences, salary, job_title, contact_information
     } = job;
     const { phone, email, address } = contact_information
-    console.log(contact_information, phone)
+    
+
+    const handleApplyJob = ()=>{
+        const intID= parseInt(id)
+        saveJobApplications(intID);
+        toast('You Have Applied Successfully');
+    }
+
     return (
         <div>
             <h2 className="text-5xl my-12 font-bold text-center">Job Details</h2>
@@ -46,11 +57,12 @@ const JobDetails = () => {
                         </div>
                     </div>
                     <div>
-                        <button className="btn btn-primary w-full my-4">Apply Now</button>
+                        <button onClick={handleApplyJob} className="btn btn-primary w-full my-4">Apply Now</button>
                     </div>
 
                 </div>
             </div>
+            <ToastContainer></ToastContainer>
         </div>
     );
 };
